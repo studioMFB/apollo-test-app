@@ -23,7 +23,7 @@ cd rockar
 ```
 Install the npm dependencies
 ```bash
-npm install
+npm i npm install -g ts-node
 ```
 
 To run the application, follow these steps:

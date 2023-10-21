@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-micro";
+import { gql } from "apollo-server-express";
 import { CustomerType } from "./types/type.customer";
 import { ProductType } from "./types/type.product";
 
