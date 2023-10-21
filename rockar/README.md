@@ -17,6 +17,10 @@ Clone this repository
 ```bash
 git clone https://github.com/studioMFB/rockar-app
 ```
+Navigate to the repository directory
+```bash
+cd rockar
+```
 Install the npm dependencies
 ```bash
 npm install
