@@ -1,5 +1,6 @@
 import path from "path";
 import csv from "csvtojson";
+import { ICustomer } from "@/graphql/models/model.customer";
 // import someDatabaseClient from './';
 
 
@@ -8,16 +9,34 @@ const ERROR_MSG_FILE_UNDEFINED = "The filename is undefined!";
 const ERROR_MSG_CONVERT = "Failed while trying to convert the csv into a json!";
 const ERROR_MSG_DB_CONNECT = "Failed to connect to the database!";
 const ERROR_MSG_DATA_SOURCE = "Invalid data source!";
+const ERROR_MSG_PARAMS = "The query parameters are undefined!";
+const ERROR_MSG_DATA = "No data was found!";
 
 export namespace DataHelper {
 
-  export async function genericDataGetter(type: string, params: Record<string, any>) {
+  export async function getDataBasedOnFilter(type:string, filter:any){
+    const dataArray = await DataHelper.genericDataGetter(type, filter) as string;
+
+    // const data = dataArray.find((data) => data.forename.toLowerCase() == filter.toLowerCase());
+    let data = undefined;
+
+    if(!data){
+      throw new Error(ERROR_MSG_DATA);
+    }
+
+    return data;
+  }
+
+  export async function genericDataGetter(type: string, params?: Record<string, any>) {
     const dataSource: string | undefined = process.env.DATA_SOURCE?.toLowerCase();
 
     switch (dataSource) {
       case "csv":
         return getDataFromCsv(type);
       case "database":
+        if(!params){
+          throw new Error(ERROR_MSG_PARAMS);
+        }
         return getDataFromDatabase(type, params);
       default:
         throw new Error(ERROR_MSG_DATA_SOURCE);
